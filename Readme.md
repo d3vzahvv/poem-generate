@@ -4,3 +4,4 @@
 
 Coding Standard: [PEP-8](pep8.md)
 
+We use LSTM (Long Short-Term Memory) to Train our bot
