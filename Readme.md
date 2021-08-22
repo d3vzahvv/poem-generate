@@ -4,5 +4,20 @@
 
 Coding Standard: [PEP-8](pep8.md)
 
-We use LSTM (Long Short-Term Memory) to Train our bot
-Data from [Chinese Poetry](https://github.com/hjptriplebee/Chinese_poem_generator)
+We use Long Short-Term Memory to train our bot
+Data from [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
+
+### Dependence
+
+- Python 3.8.3
+- torch 1.9.0
+- gensim 4.0.1
+- numpy 1.20.0
+- pickle-mixin 1.0.2
+
+### Workflow
+
+![ModelTrain](LSTM.png)
+
+
+
