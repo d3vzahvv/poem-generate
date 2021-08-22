@@ -5,7 +5,8 @@ Author: Shuo Wu
 
 from logging import setLogRecordFactory
 from os import read
-from queue import PriorityQueue
+import warnings
+warnings.filterwarnings('ignore')
 from gensim.models import word2vec
 from gensim.models.phrases import original_scorer
 import numpy as np
@@ -125,14 +126,46 @@ def generateAuto():
         result += index_2_word[wordIndex]
     print(result)
 
+def generatePoetryAcrostic():
+
+        while True:
+
+            inputText = input("请输入四个汉字：")[:4]
+            if len(inputText) <= 3:
+                generateAuto()
+            else:
+
+                result = ""
+                punctuation_list = ["，", "。", "，", "。"]
+                for i in range(4):
+
+                    h_0 = torch.tensor(np.zeros((2, 1, hiddenNum), dtype=np.float32))
+                    c_0 = torch.tensor(np.zeros((2, 1, hiddenNum), dtype=np.float32))
+                    word = inputText[i]
+                    try:
+                        wordIndex = word_2_index[word]
+                    except:
+                        wordIndex = np.random.randint(0, wordSize, 1)[0]
+                        word = index_2_word[wordIndex]
+                    result += word
+
+                    for j in range(6):
+                        wordIndex = word_2_index[word]
+                        word_embedding = torch.tensor(w1[wordIndex][None][None])
+                        pre, (h_0, c_0) = model(word_embedding, h_0, c_0)
+                        word = index_2_word[int(torch.argmax(pre))]
+                        result += word
+                    result += punctuation_list[i]
+                print(result)
         
 
 if __name__ == '__main__':
     # split()
+    print("\n请耐心等待古诗生成器启动哦\n")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-
+    modelResultFile = "Poetry_Model_lstm_model.pkl"
     batchSize = 16
     originalData, (w1, word_2_index, index_2_word) = trainVec()
     dataset = MyDataset(originalData, w1, word_2_index)
@@ -147,19 +180,34 @@ if __name__ == '__main__':
     model = MyModel(embeddingNum, hiddenNum, wordSize) 
     model = model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr = lr)
+    
+    if os.path.exists(modelResultFile):
+        model = pickle.load(open(modelResultFile, 'rb'))
 
-    for e in range(epochs):
-        for batchIndex, (xsEmbedding, ysIndex) in enumerate(dataloader):
-            xsEmbedding = xsEmbedding.to(device)
-            ysIndex = ysIndex.to(device)
-            
-            pre,_ = model(xsEmbedding)
-            loss = model.crossEntropy(pre, ysIndex.reshape(-1))
-            loss.backward()
-            optimizer.step()
-            optimizer.zero_grad()
-            
+    
+        
+    else:
+        for e in range(epochs):
+            for batchIndex, (xsEmbedding, ysIndex) in enumerate(dataloader):
+                xsEmbedding = xsEmbedding.to(device)
+                ysIndex = ysIndex.to(device)
+                
+                pre,_ = model(xsEmbedding)
+                loss = model.crossEntropy(pre, ysIndex.reshape(-1))
+                loss.backward()
+                optimizer.step()
+                optimizer.zero_grad()
+                
+                
+                if batchIndex % 30 == 0:
+                    print(f"loss:{loss:.3f}")
+                    generateAuto()
+        pickle.dump(model, open(modelResultFile, "wb"))
 
-            if batchIndex % 30 == 0:
-                print(f"loss:{loss:.3f}")
-                generateAuto()
+
+
+    generatePoetryAcrostic()
+
+            #if batchIndex % 30 == 0:
+            #   print(f"loss:{loss:.3f}")
+            #   generateAuto()
