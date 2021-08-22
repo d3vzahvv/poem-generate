@@ -3,9 +3,7 @@
 > The RNN Model Bot Generate Chinese Poems Developed By BJFU Electronic Team with Scrum Process Framework
 
 Coding Standard: [PEP-8](pep8.md)
-
-We use Long Short-Term Memory to train our bot
-Data from [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
+Data Source: [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
 
 ### Dependence
 
@@ -16,6 +14,8 @@ Data from [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
 - pickle-mixin 1.0.2
 
 ### Workflow
+
+#### Model Training
 
 ![ModelTrain](LSTM.png)
 
