@@ -165,27 +165,24 @@ if __name__ == '__main__':
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    modelResultFile = "Poetry_Model_lstm_model.pkl"
+    modelResultFile = "PoetryModelLSTMmodel.pkl"
+
     batchSize = 16
     originalData, (w1, word_2_index, index_2_word) = trainVec()
     dataset = MyDataset(originalData, w1, word_2_index)
     dataloader = DataLoader(dataset, batch_size = batchSize, shuffle = False)
-
     wordSize, embeddingNum = w1.shape
     hiddenNum = 128
     lr = 0.005
-
     epochs = 1000
 
     model = MyModel(embeddingNum, hiddenNum, wordSize) 
     model = model.to(device)
+
     optimizer = torch.optim.AdamW(model.parameters(), lr = lr)
     
     if os.path.exists(modelResultFile):
         model = pickle.load(open(modelResultFile, 'rb'))
-
-    
-        
     else:
         for e in range(epochs):
             for batchIndex, (xsEmbedding, ysIndex) in enumerate(dataloader):
@@ -200,7 +197,7 @@ if __name__ == '__main__':
                 
                 
                 if batchIndex % 30 == 0:
-                    print(f"loss:{loss:.3f}")
+                    print(f"loss:{loss:.5f}")
                     generateAuto()
         pickle.dump(model, open(modelResultFile, "wb"))
 
