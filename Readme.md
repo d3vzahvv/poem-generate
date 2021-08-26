@@ -18,7 +18,7 @@ Data Source: [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
 
 #### Model Training
 
-![ModelTrain](LSTM.png)
+![ModelTrain](workflow.png)
 
 
 
