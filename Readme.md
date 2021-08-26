@@ -16,7 +16,7 @@ Data Source: [Chinese Poetry](https://github.com/chinese-poetry/chinese-poetry)
 
 ### Workflow
 
-#### Model Training
+#### Model Training and Poetry Generating
 
 ![ModelTrain](LSTM.png)
 
