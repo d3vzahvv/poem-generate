@@ -10,20 +10,18 @@ import pickle
 import os
 import torch.nn as nn
 
-import fivespeech
 
 
-# 输入http://127.0.0.1:5000/PoetryMake.html进入首页
 app = Flask(__name__)
 
 """ 首页 """
-@app.route('/PoetryMake.html', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def getdata():
 
     """ 发送数据给前端 """
     if request.method == 'GET':
         text = '测试'  # 前端的初始化数据
-        return render_template('PoetryMake.html', text=text)
+        return render_template('index.html', text=text)
 
 
     """ 获取前端数据,并进行回传更改 """
@@ -53,13 +51,13 @@ def getdata():
                     word = index_2_word[int(torch.argmax(pre))]
                     result += word
                 result += punctuation_list[i]
-        return render_template('PoetryMake.html', text=result)
+        return render_template('index.html', text=result)
 
 
 """ 关于我们页面 """
 @app.route('/aboutus.html')
 def goto_aboutus():
-    return render_template('help.html')
+    return render_template('aboutus.html')
 
 
 """ 帮助页面 """
@@ -169,9 +167,8 @@ def generateAuto():
     return result
 
 
+
 if __name__ == '__main__':
-    # split()
-    print("\n请耐心等待古诗生成器启动哦\n")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -209,4 +206,4 @@ if __name__ == '__main__':
                     print(f"loss:{loss:.5f}")
                     generateAuto()
         pickle.dump(model, open(modelResultFile, "wb"))
-    app.run(debug=True)
+    app.run(host = '0.0.0.0')
