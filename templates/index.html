@@ -5,44 +5,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poetry Make Website</title>
-    <link rel="stylesheet" href='{{url_for("static", filename="css/index.css")}}' type='text/css'>
+    <title>Poems</title>
+    <link rel="stylesheet" href='{{url_for("static", filename="css/main.css")}}' type='text/css'>
+    <!--<link rel="stylesheet" href='./main.css' type='text/css'>-->
 </head>
-<style>
-    img{
-        border-radius: 50%;
-        overflow: hidden;
-        width: 60px;
-    }
-</style>
+
+<nav class="navbar">
+    <ul>
+        <li><a href=''>Homepage</a></li>
+        <li><a href='https://github.com/scrumbria/poem-generate'>Github</a></li>
+    </ul>
+</nav>
+
+<br>
+
 <body>
-    <div align="center">
-        <div class="navbar">
-            <h1><img src="static/images/logo.jpeg" alt="limge-1">人月神话</h1>
-            <ul>
-                <li><a href='./'>首页</a></li>
-                <li><a href='./aboutus.html'>关于我们</a></li>
-                <li><a href='./help.html'>帮助</a></li>
-            </ul>
+    <section class="list-item">
+        <div>
+            <h3>The Chinese Poems Generator</h3>
+            <p><b>Brief Intro:</b> Long Short-time Memory, words vector, Pytorch, torch.nn, flask(front end), hand-write</p>
+            <br>
+            <h3>Details:</h3>
+            <p>The pre-training model (model.pkl) supports x86(amd64) CPU</p>
+            <p>Dataset and paraments: 300 poems for 1000 epochs / hiddenNum = 128 / batchSize = 16</p>
+            <p>The whole project has been decoupled (although it's not clear enough)</p>
+            <p>Workflow: <br>Preprocess dataset (split poems to every single word) -> Vectorization -> Training -> Generate Model -> Load Model -> Generate Poems</p>
+
+            <h3>Usage:</h3>
+            <p>Enter 4 Simplified Chinese characters (aka Hanzi / Chinese Kanji) then the model Generates a "4 sentences 7 words traditional Chinese poem", every sentence
+                starts with the entered character
+            </p>
+            <p>
+                If the number of entered characters aren't 4 (even there's no character) or the entered characters aren't Simplified Chinese characters (like English or other
+                Language), the model will still print a Chinese poem. Because the model uses the word vectors to forecast next character
+            </p>
+
+            <p>Due to the small test model (300 poems dataset), the model may generate poems don't start with the entered characters which are never included by dataset</p>
+
+            <h3>Input below:</h3>
+            <form action="{{ url_for('getdata') }}" method="post">
+                <input name="text1" type="text" placeholder="Enter 4 first words of Poems">
+                <input type="submit" value="Generate" onclick="getdata()"/>
+            </form>
         </div>
-        <main class="main" id="yzx">
-            <section class="list-item">
-                <div class=item-image></div>
-                <form action="{{ url_for('getdata') }}" method="post">
-                    <b>请输入关键词或场景 </b><input name="text1" type="text" style="width:300px;height:35px">
-                    <input type="submit" value="生成诗词" style="width:70px;height:35px" onclick="getdata()"/>
-                    <input type="submit" value="刷新" style="width:45px;height:35px"/>
-                </form>
-                </br>
-                <img src="static/images/camera.jpeg" alt="limge-1">
-                </br>
-                <form>
-                    <p style="font-size:20px">
-                    {{ text }}
-                    </p>
-                </form>
-            </section>
-        </main>
-    </div>
+
+        <br>
+
+        <div>
+        <form>
+            <p style="font-size:20px">
+            {{ text }}
+            </p>
+        </form>
+        </div>
+
+        <br>
+        
+        <div>
+            <p>Shuo</p>
+            <p>College of Sicence,</p>
+            <p>Beijing Forestry University</p>
+        </div>
+
+    </section>
 </body>
 </html>
