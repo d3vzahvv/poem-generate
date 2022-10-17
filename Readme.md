@@ -1,6 +1,6 @@
 # Poem Generate
 
-> The RNN Model Bot Generate Chinese Poems Developed with Scrum Process Framework
+> The RNN Model Generates Chinese Poems Developed with Scrum Process Framework
 
 Coding Standard: [PEP-8](pep8.md)
 
@@ -47,7 +47,8 @@ conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cpuonly -c py
 ```
 or install pytorch via coda (CUDA 11)
 ```
-conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=11.3 -c pytorch -c conda-forge
+conda install pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 \
+cudatoolkit=11.3 -c pytorch -c conda-forge
 ```
 
 ```cd``` to the project file and run main.py
@@ -59,7 +60,9 @@ terminal output
 ```
  * Serving Flask app 'main'
  * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+WARNING: This is a development server. \
+Do not use it in a production deployment. \ 
+Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
  * Running on http://192.168.1.112:5000
@@ -68,7 +71,7 @@ WARNING: This is a development server. Do not use it in a production deployment.
 then open browser and go to ```http://127.0.0.1:5000```
 
 ### Debug
-If there's error about torch devices (CPU and CUDA), please delete the pre-training model (```model.pkl```) and run ```python main.py``` again to re-training model
+If there's error about torch devices (CPU and CUDA), please delete the pre-training model (```model.pkl```) and run ```python main.py``` again to re-train model
 
 ## Details
 
